@@ -1,0 +1,94 @@
+# SQL Practice Questions — Beginner to Advanced
+
+## Practice Tables
+
+### Employees
+
+| emp_id | emp_name | department | salary | manager_id |
+|---|---|---|---|---|
+| 101 | Ravi | IT | 50000 | 105 |
+| 102 | Priya | HR | 40000 | 106 |
+| 103 | Arun | IT | 60000 | 105 |
+| 104 | Sneha | Finance | 45000 | 107 |
+| 105 | Kiran | IT | 80000 | NULL |
+| 106 | Divya | HR | 70000 | NULL |
+| 107 | Rahul | Finance | 55000 | NULL |
+| 108 | Meena | IT | 50000 | 105 |
+
+### Departments
+
+| dept_id | department | location |
+|---|---|---|
+| 1 | IT | Bangalore |
+| 2 | HR | Chennai |
+| 3 | Finance | Hyderabad |
+| 4 | Marketing | Mumbai |
+
+### Orders
+
+| order_id | customer_name | amount | order_date |
+|---|---|---|---|
+| 201 | Ravi | 2500 | 2026-01-10 |
+| 202 | Priya | 4000 | 2026-01-12 |
+| 203 | Ravi | 1500 | 2026-02-05 |
+| 204 | Arun | 6000 | 2026-02-15 |
+| 205 | Sneha | 3000 | 2026-03-01 |
+| 206 | Priya | 2000 | 2026-03-10 |
+
+---
+
+## Level 1: Basic SQL
+
+1. Display all employees.
+2. Display employee names and salaries.
+3. Find employees whose salary is greater than 50,000.
+4. Find employees working in the IT department.
+5. Display employees whose salary is between 40,000 and 60,000.
+6. Find employees whose names start with 'R'.
+7. Display employees in descending order of salary.
+8. Find the distinct department names.
+9. Display the top 3 highest-paid employees.
+10. Find employees whose manager_id is NULL.
+
+## Level 2: Aggregate Functions and GROUP BY
+
+11. Find the total number of employees.
+12. Find the highest salary.
+13. Find the average salary of all employees.
+14. Find the total salary paid by each department.
+15. Find the number of employees in each department.
+16. Find departments having more than 2 employees.
+17. Find the average salary for each department.
+18. Find the department with the highest total salary.
+
+## Level 3: SQL JOINs
+
+19. Display employee names along with their department locations.
+20. Display employees who belong to departments listed in the Departments table.
+21. Display all departments, including departments that have no employees.
+22. Find employees whose department is not present in the Departments table.
+23. Display each employee's name and their manager's name.
+24. Find employees who earn more than their manager.
+25. Find departments that have no employees.
+
+## Level 4: Subqueries and Advanced SQL
+
+26. Find employees earning more than the average salary.
+27. Find the second-highest salary.
+28. Find employees earning the maximum salary in their department.
+29. Find employees earning more than the average salary of their department.
+30. Find the third-highest distinct salary.
+31. Find customers whose total order amount exceeds 4,000.
+32. Find the employee with the highest salary in each department.
+33. Rank employees by salary within each department using a window function.
+34. Find the cumulative total of orders by order_date.
+35. Find employees whose salary is greater than the salary of at least one employee in HR.
+
+## Level 5: SQL Interview Coding Questions
+
+36. Find the second-highest salary without using LIMIT.
+37. Find duplicate employee salaries.
+38. Find employees who share the same salary.
+39. Find the top 2 highest-paid employees in each department.
+40. Find the department-wise salary difference between the highest and lowest salaries.
+41. Find the month with the highest total order
