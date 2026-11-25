@@ -1,0 +1,565 @@
+# Linux Notes — Beginner to Intermediate
+
+## 1. What is Linux?
+
+Linux is an open-source operating system kernel. Linux distributions combine the kernel with system tools and software to create a complete operating system.
+
+Examples of Linux distributions:
+- Ubuntu
+- Debian
+- Fedora
+- Red Hat Enterprise Linux (RHEL)
+- Linux Mint
+- Arch Linux
+
+### Why Linux is used
+- Runs many web servers, cloud systems, and containers.
+- Provides command-line tools for automation and administration.
+- Supports multiple users and permissions.
+- Is widely used in software development, DevOps, and cybersecurity.
+
+## 2. Linux Architecture
+
+Main components:
+
+1. **Hardware:** CPU, RAM, storage, network devices.
+2. **Kernel:** Manages hardware, processes, memory, devices, and system calls.
+3. **Shell:** Accepts commands and passes requests to the operating system.
+4. **Utilities and applications:** Commands and programs used by users.
+
+A **shell** is a command interpreter. Bash is a commonly used shell.
+
+## 3. Linux File System
+
+Linux uses a single directory tree that starts at the root directory `/`.
+
+| Directory | Purpose |
+|---|---|
+| `/` | Root of the file system |
+| `/home` | Regular users' home directories |
+| `/root` | Home directory of the root user |
+| `/etc` | System configuration files |
+| `/var` | Frequently changing data, such as logs |
+| `/tmp` | Temporary files |
+| `/usr` | Many user applications and shared files |
+| `/bin` | Essential user commands on many systems |
+| `/sbin` | System administration commands |
+| `/dev` | Device files |
+| `/proc` | Virtual files containing process and kernel information |
+| `/opt` | Optional application software |
+| `/mnt` | Common mount point for temporary file systems |
+| `/boot` | Files needed to boot the system |
+
+### Important paths
+- `.` means the current directory.
+- `..` means the parent directory.
+- `~` means the current user's home directory.
+- `/` means the root directory.
+
+## 4. Basic Linux Commands
+
+### Check current location
+```bash
+pwd
+```
+
+### List files and directories
+```bash
+ls
+ls -l       # Detailed listing
+ls -a       # Include hidden files
+ls -lh      # Human-readable file sizes
+```
+
+### Change directory
+```bash
+cd /home
+cd ..       # Move to parent directory
+cd ~        # Move to home directory
+cd -        # Return to previous directory
+```
+
+### Create files and directories
+```bash
+touch notes.txt
+mkdir projects
+mkdir -p projects/java/src
+```
+
+### Copy, move, and rename
+```bash
+cp notes.txt notes-copy.txt
+cp -r projects projects-backup
+mv notes.txt linux-notes.txt
+mv linux-notes.txt projects/
+```
+
+### Remove files and directories
+```bash
+rm notes.txt
+rmdir empty-directory
+rm -r old-directory
+```
+
+**Caution:** `rm` usually deletes files without moving them to a recycle bin. Check the path before running it. Avoid `rm -rf` unless you fully understand the target.
+
+### Display file contents
+```bash
+cat notes.txt
+less notes.txt
+head notes.txt
+tail notes.txt
+tail -f /var/log/syslog
+```
+
+- `cat` displays file contents.
+- `less` lets you scroll through a file.
+- `head` displays the first lines.
+- `tail` displays the last lines.
+- `tail -f` follows new lines added to a file.
+
+## 5. Command Help
+
+```bash
+man ls
+ls --help
+which java
+type cd
+```
+
+- `man` opens a command's manual page.
+- `--help` displays command help when supported.
+- `which` shows the executable path found through `PATH`.
+- `type` identifies whether a command is an alias, shell built-in, or executable.
+
+## 6. Absolute and Relative Paths
+
+An **absolute path** starts from `/`.
+
+```bash
+/home/praveen/projects/app
+```
+
+A **relative path** is interpreted from the current directory.
+
+```bash
+projects/app
+../documents
+```
+
+Example: If the current directory is `/home/praveen`, then `projects/app` refers to `/home/praveen/projects/app`.
+
+## 7. File Permissions
+
+Linux permissions apply to three groups:
+
+- **u:** User or owner
+- **g:** Group
+- **o:** Others
+
+Each group can have:
+- **r:** Read
+- **w:** Write
+- **x:** Execute
+
+### View permissions
+```bash
+ls -l
+```
+
+Example:
+```text
+-rwxr-xr--
+```
+
+This means:
+- Owner: read, write, execute
+- Group: read, execute
+- Others: read
+
+### Change permissions with symbolic notation
+```bash
+chmod u+x script.sh
+chmod g-w file.txt
+chmod o-r file.txt
+```
+
+### Change permissions with numeric notation
+
+| Permission | Value |
+|---|---:|
+| Read (`r`) | 4 |
+| Write (`w`) | 2 |
+| Execute (`x`) | 1 |
+
+Add the values for each group.
+
+```bash
+chmod 755 script.sh
+chmod 644 notes.txt
+```
+
+- `755` = owner `rwx`, group `r-x`, others `r-x`
+- `644` = owner `rw-`, group `r--`, others `r--`
+
+### Change file owner
+```bash
+sudo chown praveen:praveen file.txt
+```
+
+Use `sudo` only when administrative permission is required.
+
+## 8. Users and Groups
+
+```bash
+whoami
+id
+who
+groups
+```
+
+- `whoami` displays the current username.
+- `id` displays user and group IDs.
+- `who` lists logged-in users.
+- `groups` displays the groups a user belongs to.
+
+Administrative commands:
+
+```bash
+sudo adduser testuser
+sudo passwd testuser
+sudo usermod -aG sudo testuser
+sudo deluser testuser
+```
+
+The exact commands and administrator group can vary by distribution.
+
+## 9. Processes
+
+A **process** is a running program. Each process has a process ID (PID).
+
+```bash
+ps
+ps aux
+top
+```
+
+### Stop a process
+```bash
+kill 1234
+kill -9 1234
+```
+
+- `kill 1234` sends the default termination signal, allowing the process to shut down cleanly.
+- `kill -9 1234` forces termination. Use it only when normal termination fails.
+
+### Background and foreground jobs
+```bash
+command &
+jobs
+fg
+```
+
+- `&` starts a command in the background.
+- `jobs` lists jobs started by the current shell.
+- `fg` brings a background job to the foreground.
+
+## 10. Package Management on Ubuntu/Debian
+
+```bash
+sudo apt update
+sudo apt upgrade
+sudo apt install nginx
+sudo apt remove nginx
+sudo apt autoremove
+```
+
+- `apt update` refreshes package information.
+- `apt upgrade` installs available package updates.
+- `apt install` installs a package.
+- `apt remove` removes a package.
+- `apt autoremove` removes packages no longer needed.
+
+`apt update` does not itself upgrade installed applications.
+
+## 11. Networking Commands
+
+```bash
+ip addr
+ip route
+ping example.com
+curl https://example.com
+ss -tuln
+```
+
+- `ip addr` displays network interfaces and IP addresses.
+- `ip route` displays routing information.
+- `ping` tests network reachability using ICMP.
+- `curl` makes requests to URLs and can retrieve responses.
+- `ss -tuln` lists listening TCP and UDP sockets without resolving names.
+
+### Check DNS resolution
+```bash
+getent hosts example.com
+```
+
+## 12. Disk and Memory
+
+```bash
+df -h
+du -sh .
+free -h
+lsblk
+```
+
+- `df -h` shows file system disk usage.
+- `du -sh .` shows the size of the current directory.
+- `free -h` displays memory and swap usage.
+- `lsblk` lists block devices such as disks and partitions.
+
+## 13. Search and Text Processing
+
+### Find files
+```bash
+find . -name "*.java"
+find /var/log -type f
+```
+
+### Search text inside files
+```bash
+grep "ERROR" app.log
+grep -i "error" app.log
+grep -R "TODO" .
+```
+
+### Count lines, words, and characters
+```bash
+wc file.txt
+wc -l file.txt
+```
+
+### Sort and remove adjacent duplicate lines
+```bash
+sort names.txt
+sort names.txt | uniq
+```
+
+`uniq` removes only adjacent duplicate lines. Sorting first helps group duplicates.
+
+## 14. Pipes and Redirection
+
+### Pipe
+A pipe (`|`) sends one command's output to another command.
+
+```bash
+ps aux | grep java
+```
+
+### Redirection
+```bash
+ls > files.txt
+echo "Hello" >> notes.txt
+command 2> errors.txt
+```
+
+- `>` writes output to a file, replacing its previous contents.
+- `>>` appends output to a file.
+- `2>` redirects standard error.
+
+## 15. Environment Variables
+
+```bash
+echo "$HOME"
+echo "$PATH"
+printenv
+```
+
+Set a variable for the current shell:
+
+```bash
+export APP_ENV=development
+```
+
+A variable set this way is available to child processes started from that shell. It does not automatically persist after the shell closes.
+
+## 16. Services with systemd
+
+Many Linux distributions use `systemd` to manage services.
+
+```bash
+systemctl status nginx
+sudo systemctl start nginx
+sudo systemctl stop nginx
+sudo systemctl restart nginx
+sudo systemctl enable nginx
+```
+
+- `start` starts a service now.
+- `stop` stops a service.
+- `restart` restarts a service.
+- `enable` configures a service to start at boot.
+
+### View service logs
+```bash
+journalctl -u nginx
+journalctl -u nginx -f
+```
+
+The `-f` option follows new log entries.
+
+## 17. Logs and Troubleshooting
+
+Common log locations:
+
+- `/var/log/` — system and application logs
+- `journalctl` — systemd journal logs
+
+Useful commands:
+
+```bash
+dmesg
+journalctl -p err
+journalctl --since "1 hour ago"
+```
+
+Basic troubleshooting sequence:
+
+1. Reproduce the issue and note the exact error.
+2. Check whether the process or service is running.
+3. Check logs around the time of failure.
+4. Check disk, memory, network, and permissions.
+5. Identify the cause before changing configuration.
+6. Apply a small change and verify the result.
+
+## 18. SSH
+
+SSH allows secure remote access to another computer.
+
+```bash
+ssh username@server-ip
+```
+
+Copy a file to a remote system:
+
+```bash
+scp file.txt username@server-ip:/home/username/
+```
+
+SSH commonly uses port `22`, unless configured otherwise.
+
+## 19. Shell Scripts
+
+A shell script is a file containing commands that can be run together.
+
+Example:
+
+```bash
+#!/bin/bash
+
+echo "Starting script"
+pwd
+ls -l
+echo "Script completed"
+```
+
+Save it as `hello.sh`, then run:
+
+```bash
+chmod +x hello.sh
+./hello.sh
+```
+
+### Variables and conditions
+
+```bash
+#!/bin/bash
+
+name="Praveen"
+
+if [ "$name" = "Praveen" ]; then
+    echo "Welcome"
+else
+    echo "Unknown user"
+fi
+```
+
+### Loop
+
+```bash
+#!/bin/bash
+
+for number in 1 2 3 4 5
+do
+    echo "$number"
+done
+```
+
+## 20. Linux in Development and DevOps
+
+Linux is commonly used to:
+
+- Run backend applications and databases.
+- Host websites and APIs.
+- Manage cloud virtual machines.
+- Run containers and CI/CD jobs.
+- Inspect application logs.
+- Automate repetitive tasks with shell scripts.
+- Configure users, permissions, services, and networking.
+
+### Example: Start a Java application
+
+```bash
+java -version
+javac -version
+java -jar app.jar
+```
+
+Run it in the background:
+
+```bash
+java -jar app.jar &
+```
+
+For a long-running production service, use a service manager such as `systemd` rather than relying on a shell background job.
+
+## 21. Quick Revision
+
+| Command | Purpose |
+|---|---|
+| `pwd` | Show current directory |
+| `ls -la` | List files, including hidden files |
+| `cd` | Change directory |
+| `mkdir` | Create directory |
+| `touch` | Create an empty file or update its timestamp |
+| `cp` | Copy files |
+| `mv` | Move or rename files |
+| `rm` | Remove files |
+| `cat` | Display file contents |
+| `grep` | Search text |
+| `find` | Search for files and directories |
+| `chmod` | Change permissions |
+| `chown` | Change ownership |
+| `ps` | Display processes |
+| `top` | Monitor processes |
+| `kill` | Send a signal to a process |
+| `df -h` | Show disk space |
+| `free -h` | Show memory usage |
+| `ip addr` | Show IP addresses |
+| `systemctl` | Manage services |
+| `journalctl` | Read systemd logs |
+| `sudo` | Run a command with elevated privileges |
+
+## 22. Practice Tasks
+
+1. Create a directory named `linux-practice`.
+2. Inside it, create three files: `notes.txt`, `commands.txt`, and `script.sh`.
+3. Write text into `notes.txt` and display it.
+4. Copy `notes.txt` to `backup.txt`.
+5. Rename `commands.txt` to `linux-commands.txt`.
+6. Find all `.txt` files in the directory.
+7. Set `script.sh` to permission mode `755`.
+8. Display the current user and current directory.
+9. Check disk and memory usage.
+10. Write a shell script that prints numbers from 1 to 10.
+
+**Learning tip:** Practice commands in a test directory or virtual machine. Do not experiment with deletion, ownership, or permission commands on important system files.
